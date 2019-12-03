@@ -43,7 +43,7 @@ def get_event_list(request):
     name = request.GET.get("name","")   #发布会名称
 
     if eid == '' and name =='':
-        return JsonResponse({'status':10022,'message':'parameter error'})
+        return JsonResponse({'status':10022,'message':'parameter error参数错误'})
 
     if eid != '':
         event = {}
@@ -97,14 +97,14 @@ def add_guest(request):
         return JsonResponse({'status':10023,'message':'event status is not available得不到发布会状态'})
 
     event_limit = Event.objects.get(id=eid).limit  # 发布会限制人数
-    guest_limit = Guest.objects.get(event_id=eid)  # 发布会已添加的嘉宾数
+    guest_limit = Guest.objects.filter(event_id=eid)  # 发布会已添加的嘉宾数
 
     if len(guest_limit) >= event_limit:
         return JsonResponse({'status':10024,'message':'event number is full'})
 
     event_time = Event.objects.get(id=eid).start_time  #发布会时间
     etime = str(event_time).split(".")[0]
-    timeArray = time.strftime(etime,"%Y-%m-%d %H:%M:%S")
+    timeArray = time.strptime(etime, "%Y-%m-%d %H:%M:%S")
     e_time = int(time.mktime(timeArray))
 
     now_time = str(time.time())

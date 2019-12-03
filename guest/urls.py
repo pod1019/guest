@@ -41,7 +41,7 @@ urlpatterns = [
     url(r'^sign_index/(?P<event_id>[0-9]+)/$', views.sign_index), #配置签到
     url(r'^sign_index_action/(?P<event_id>[0-9]+)/$', views.sign_index_action), # 添加签到路径的路由
     url(r'^logout/$', views.logout), #添加退出目录的路由
-    url(r'^api/', include('sign.urls', namespace="sign")),
+    url(r'^api/', include('sign.urls', namespace="sign")), #添加接口基本路径“/api/”
 
 
 
